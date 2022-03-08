@@ -1,0 +1,61 @@
+{
+  "product_name": "niobe407",
+  "ohos_version": "OpenHarmony 3.1",
+  "type":"mini",
+  "version": "3.0",
+  "device_company": "talkweb",
+  "board": "niobe407",
+  "kernel_type": "liteos_m",
+  "kernel_version": "3.0.0",
+  "subsystems": [
+    {
+      "subsystem": "kernel",
+      "components": [
+        { "component": "liteos_m", "features":[ "ohos_kernel_liteos_m_lwip_path = \"//device/board/talkweb/niobe407/sdk/lwip_adapter\""] }
+      ]
+    },
+    {
+      "subsystem": "hiviewdfx",
+      "components": [
+        { "component": "hilog_lite", "features":[] },
+        { "component": "hievent_lite", "features":[] }
+      ]
+    },
+    {
+      "subsystem": "distributedschedule",
+      "components": [
+        { "component": "samgr_lite", "features":[] }
+      ]
+    },
+    {
+      "subsystem": "utils",
+      "components": [
+        { "component": "file", "features":[] },
+        { "component": "kv_store", "features": [ "enable_ohos_utils_native_lite_kv_store_use_posix_kv_api = false" ] },
+        { "component": "os_dump", "features":[] }
+      ]
+    },
+    {
+      "subsystem": "startup",
+      "components": [
+        { "component": "bootstrap_lite", "features":[] },
+        { "component": "syspara_lite", "features":[] }
+      ]
+    },
+    {
+      "subsystem": "security",
+      "components": [
+        { "component": "huks", "features":
+          [
+            "huks_use_lite_storage = true",
+            "huks_use_hardware_root_key = true",
+            "huks_config_file = \"hks_config_lite.h\""
+          ]
+        }
+      ]
+    }
+  ],
+  "vendor_adapter_dir": "//device/soc/stmicroelectronics/stm32f4xx/sdk",
+  "third_party_dir": "//third_party",
+  "product_adapter_dir": "//vendor/talkweb/niobe407/hals"
+}
