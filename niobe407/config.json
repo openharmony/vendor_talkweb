@@ -55,7 +55,7 @@
       ]
     }
   ],
-  "vendor_adapter_dir": "//device/soc/stmicroelectronics/stm32f4xx/sdk",
+  "vendor_adapter_dir": "//device/soc/st/stm32f4xx/sdk",
   "third_party_dir": "//third_party",
   "product_adapter_dir": "//vendor/talkweb/niobe407/hals"
 }
