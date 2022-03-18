@@ -15,18 +15,18 @@
 
 #include "hal_sys_param.h"
 
-static const char OHOS_DEVICE_TYPE[] = {"****"};
+static const char OHOS_DEVICE_TYPE[] = {"Evaluation Board"};
 static const char OHOS_DISPLAY_VERSION[] = {"OpenHarmony 3.1"};
 static const char OHOS_MANUFACTURE[] = {"Talkweb"};
 static const char OHOS_BRAND[] = {"Talkweb"};
-static const char OHOS_MARKET_NAME[] = {"stm32"};
-static const char OHOS_PRODUCT_SERIES[] = {"****"};
-static const char OHOS_PRODUCT_MODEL[] = {"****"};
-static const char OHOS_SOFTWARE_MODEL[] = {"****"};
-static const char OHOS_HARDWARE_MODEL[] = {"****"};
-static const char OHOS_HARDWARE_PROFILE[] = {"aout:true,display:true"};
-static const char OHOS_BOOTLOADER_VERSION[] = {"bootloader"};
-static const char OHOS_ABI_LIST[] = {"****"};
+static const char OHOS_MARKET_NAME[] = {"Niobe"};
+static const char OHOS_PRODUCT_SERIES[] = {"Niobe"};
+static const char OHOS_PRODUCT_MODEL[] = {"Niobe407"};
+static const char OHOS_SOFTWARE_MODEL[] = {"1.0.0"};
+static const char OHOS_HARDWARE_MODEL[] = {"2.0.0"};
+static const char OHOS_HARDWARE_PROFILE[] = {"RAM:192K,ROM:1M,ETH:true"};
+static const char OHOS_BOOTLOADER_VERSION[] = {"twboot-v2022.03"};
+static const char OHOS_ABI_LIST[] = {"armm4_hard_fpv4-sp-d16-liteos"};
 static const char OHOS_SERIAL[] = {"1234567890"};  // provided by OEM.
 static const int OHOS_FIRST_API_VERSION = 1;
 
