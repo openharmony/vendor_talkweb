@@ -14,7 +14,7 @@
         {
           "component": "liteos_m",
           "features": [
-            "ohos_kernel_liteos_m_lwip_path = \"//device/board/talkweb/niobe407/sdk/lwip_adapter\""
+            "ohos_kernel_liteos_m_lwip_path = \"//device/board/talkweb/niobe407/liteos_m/lwip_adapter\""
           ]
         }
       ]
