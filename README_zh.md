@@ -35,6 +35,6 @@ vendor/talkweb/                  --- vendor_talkweb    仓库路径
 
 ## 相关仓
 
-[device/board/talkweb](https://gitee.com/openharmony-sig/device_board_talkweb)
+[device_board_talkweb](https://gitee.com/openharmony/device_board_talkweb)
 
-[device/soc/st](https://gitee.com/openharmony-sig/device_soc_st)
+[device_soc_st](https://gitee.com/openharmony/device_soc_st)
