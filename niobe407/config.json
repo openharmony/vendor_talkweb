@@ -68,7 +68,7 @@
           "features": []
         },
         {
-          "component": "syspara_lite",
+          "component": "init_lite",
           "features": []
         }
       ]
