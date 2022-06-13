@@ -58,10 +58,6 @@
         {
           "component": "file",
           "features": []
-        },
-        {
-          "component": "os_dump",
-          "features": []
         }
       ]
     },
