@@ -12,6 +12,4 @@
 # limitations under the License.
 
 group("niobe407") {
-  deps = [
-  ]
 }
