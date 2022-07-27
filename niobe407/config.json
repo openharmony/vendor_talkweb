@@ -53,7 +53,7 @@
       ]
     },
     {
-      "subsystem": "utils",
+      "subsystem": "commonlibrary",
       "components": [
         {
           "component": "file",
