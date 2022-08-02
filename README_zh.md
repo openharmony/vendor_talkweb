@@ -19,11 +19,11 @@ vendor/talkweb/                  --- vendor_talkweb    仓库路径
 
 ## 使用教程
 
-- [开发环境搭建与固件编译](https://gitee.com/openharmony-sig/device_board_talkweb/blob/master/niobe407/docs/software/开发环境搭建与固件编译.md)
+- [开发环境搭建与固件编译](https://gitee.com/openharmony/device_board_talkweb/blob/master/niobe407/docs/software/开发环境搭建与固件编译.md)
 
-- [固件烧录](https://gitee.com/openharmony-sig/device_board_talkweb/blob/master/niobe407/docs/software/固件烧录.md)
+- [固件烧录](https://gitee.com/openharmony/device_board_talkweb/blob/master/niobe407/docs/software/固件烧录.md)
 
-- [快速开发指南](https://gitee.com/openharmony-sig/device_board_talkweb/blob/master/niobe407/docs/software/快速开发指南.md)
+- [快速开发指南](https://gitee.com/openharmony/device_board_talkweb/blob/master/niobe407/docs/software/快速开发指南.md)
 
 ## 使用说明
 
