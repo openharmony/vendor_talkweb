@@ -60,10 +60,6 @@
         {
           "component": "init_lite",
           "features": []
-        },
-        {
-          "component": "syspara_lite",
-          "features": []
         }
       ]
     },
