@@ -27,102 +27,130 @@ static const char OHOS_HARDWARE_MODEL[] = {"2.0.0"};
 static const char OHOS_HARDWARE_PROFILE[] = {"RAM:192K,ROM:1M,ETH:true"};
 static const char OHOS_BOOTLOADER_VERSION[] = {"twboot-v2022.03"};
 static const char OHOS_ABI_LIST[] = {"armm4_hard_fpv4-sp-d16-liteos"};
-static const char OHOS_SERIAL[] = {"1234567890"};  // provided by OEM.
+static const char OHOS_SERIAL[] = {"1234567890"}; // provided by OEM.
 static const int OHOS_FIRST_API_VERSION = 1;
+static const char OHOS_SECURITY_PATCH_TAG[] = {"0.0.0.1"};
+static const int OHOS_SDK_API_VERSION = 1;
+static const char OHOS_VERSION_ID[] = {"0.0.0.1"};
+static const char OHOS_BUILD_ROOT_HASH[] = {"de259d62a5dee08a2ee02fd7fc02caf8"};
+static const char OHOS_OS_FULL_NAME[] = {"OpenHarmony"};
 
-static const char EMPTY_STR[] = {""};
-
-const char *HalGetDeviceType(void)
+const char *GetDeviceType(void)
 {
     return OHOS_DEVICE_TYPE;
 }
 
-const char *HalGetManufacture(void)
+const char *GetManufacture(void)
 {
     return OHOS_MANUFACTURE;
 }
 
-const char *HalGetBrand(void)
+const char *GetBrand(void)
 {
     return OHOS_BRAND;
 }
 
-const char *HalGetMarketName(void)
+const char *GetMarketName(void)
 {
     return OHOS_MARKET_NAME;
 }
 
-const char *HalGetProductSeries(void)
+const char *GetProductSeries(void)
 {
     return OHOS_PRODUCT_SERIES;
 }
 
-const char *HalGetProductModel(void)
+const char *GetProductModel(void)
 {
     return OHOS_PRODUCT_MODEL;
 }
 
-const char *HalGetSoftwareModel(void)
+const char *GetSoftwareModel(void)
 {
     return OHOS_SOFTWARE_MODEL;
 }
 
-const char *HalGetHardwareModel(void)
+const char *GetHardwareModel(void)
 {
     return OHOS_HARDWARE_MODEL;
 }
 
-const char *HalGetHardwareProfile(void)
+const char *GetHardwareProfile(void)
 {
     return OHOS_HARDWARE_PROFILE;
 }
 
-const char *HalGetSerial(void)
+const char *GetSerial(void)
 {
     return OHOS_SERIAL;
 }
 
-const char *HalGetBootloaderVersion(void)
+const char *GetBootloaderVersion(void)
 {
     return OHOS_BOOTLOADER_VERSION;
 }
 
-const char *HalGetAbiList(void)
+const char *GetAbiList(void)
 {
     return OHOS_ABI_LIST;
 }
 
-const char *HalGetDisplayVersion(void)
+const char *GetDisplayVersion(void)
 {
     return OHOS_DISPLAY_VERSION;
 }
 
-const char *HalGetIncrementalVersion(void)
+const char *GetIncrementalVersion(void)
 {
     return INCREMENTAL_VERSION;
 }
 
-const char *HalGetBuildType(void)
+const char *GetBuildType(void)
 {
     return BUILD_TYPE;
 }
 
-const char *HalGetBuildUser(void)
+const char *GetBuildUser(void)
 {
     return BUILD_USER;
 }
 
-const char *HalGetBuildHost(void)
+const char *GetBuildHost(void)
 {
     return BUILD_HOST;
 }
 
-const char *HalGetBuildTime(void)
+const char *GetBuildTime(void)
 {
     return BUILD_TIME;
 }
 
-int HalGetFirstApiVersion(void)
+int GetFirstApiVersion(void)
 {
     return OHOS_FIRST_API_VERSION;
+}
+
+const char *GetSecurityPatchTag(void)
+{
+    return OHOS_SECURITY_PATCH_TAG;
+}
+
+int GetSdkApiVersion(void)
+{
+    return OHOS_SDK_API_VERSION;
+}
+
+const char *GetVersionId(void)
+{
+    return OHOS_VERSION_ID;
+}
+
+const char *GetBuildRootHash(void)
+{
+    return OHOS_BUILD_ROOT_HASH;
+}
+
+const char *GetOSFullName(void)
+{
+    return OHOS_OS_FULL_NAME;
 }
