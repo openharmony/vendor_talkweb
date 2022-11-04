@@ -59,7 +59,9 @@
         },
         {
           "component": "init_lite",
-          "features": []
+          "features": [
+            "enable_ohos_startup_init_feature_begetctl_liteos = true"
+          ]
         }
       ]
     },
@@ -80,8 +82,14 @@
     {
       "subsystem": "xts",
       "components": [
-        {"component": "xts_acts", "features": []},
-        {"component": "xts_tools", "features": []}
+        {
+          "component": "xts_acts",
+          "features": []
+        },
+        {
+          "component": "xts_tools",
+          "features": []
+        }
       ]
     }
   ],
