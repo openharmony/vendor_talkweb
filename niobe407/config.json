@@ -62,10 +62,6 @@
           "features": [
             "enable_ohos_startup_init_feature_begetctl_liteos = true"
           ]
-        },
-        {
-          "component": "syspara_lite",
-          "features": []
         }
       ]
     },
