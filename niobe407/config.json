@@ -83,11 +83,11 @@
       "subsystem": "xts",
       "components": [
         {
-          "component": "xts_acts",
+          "component": "acts",
           "features": []
         },
         {
-          "component": "xts_tools",
+          "component": "tools",
           "features": []
         }
       ]
