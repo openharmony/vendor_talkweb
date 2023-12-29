@@ -186,7 +186,6 @@ static void *HdfI2cTestEntry(void *arg)
     osDelay(DELAY_TICKS);
     memset_s(uuidBuf, sizeof(uuidBuf), 0, sizeof(uuidBuf));
     if (Read8ByteUUID(uuidBuf, sizeof(uuidBuf)) != true) {
-        ExitThread();
         return;
     }
 
