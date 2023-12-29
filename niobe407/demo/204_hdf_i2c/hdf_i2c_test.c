@@ -153,7 +153,7 @@ static bool Read8ByteUUID(unsigned char *buf, unsigned int len)
     return true;
 }
 
-static void exitThread(void)
+static void ExitThread(void)
 {
     if (g_i2cHandle != NULL) {
         I2cClose(g_i2cHandle);
@@ -172,21 +172,21 @@ static void *HdfI2cTestEntry(void *arg)
     g_i2cHandle = I2cOpen(busId);
     if (g_i2cHandle == NULL) {
         HDF_LOGE("%s: Open I2c:%u fail!\r\n", __func__, busId);
-        exitThread();
+        ExitThread();
         return;
     }
 
     osDelay(DELAY_TICKS);
     unsigned char uuidBuf[8] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb, 0xcc, 0xdd};
     if (Write8ByteUUID(uuidBuf, sizeof(uuidBuf)) != true) {
-        exitThread();
+        ExitThread();
         return;
     }
 
     osDelay(DELAY_TICKS);
     memset_s(uuidBuf, sizeof(uuidBuf), 0, sizeof(uuidBuf));
     if (Read8ByteUUID(uuidBuf, sizeof(uuidBuf)) != true) {
-        exitThread();
+        ExitThread();
         return;
     }
 
