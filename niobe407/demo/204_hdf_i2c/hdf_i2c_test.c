@@ -153,16 +153,6 @@ static bool Read8ByteUUID(unsigned char *buf, unsigned int len)
     return true;
 }
 
-static void ExitThread(void)
-{
-    if (g_i2cHandle != NULL) {
-        I2cClose(g_i2cHandle);
-    }
-
-    osThreadTerminate(g_i2cThreadId);
-    g_i2cThreadId = NULL;
-}
-
 static void *HdfI2cTestEntry(void *arg)
 {
     (void *)arg;
@@ -172,14 +162,12 @@ static void *HdfI2cTestEntry(void *arg)
     g_i2cHandle = I2cOpen(busId);
     if (g_i2cHandle == NULL) {
         HDF_LOGE("%s: Open I2c:%u fail!\r\n", __func__, busId);
-        ExitThread();
         return;
     }
 
     osDelay(DELAY_TICKS);
     unsigned char uuidBuf[8] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb, 0xcc, 0xdd};
     if (Write8ByteUUID(uuidBuf, sizeof(uuidBuf)) != true) {
-        ExitThread();
         return;
     }
 
