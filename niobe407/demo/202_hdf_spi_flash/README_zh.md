@@ -37,7 +37,7 @@
 - device_spi_info.hcs 在/device/board/talkweb/niobe407/sdk/hdf_config/device_spi_info.hcs
 ```
 root {
-    module = "talkweb,stm32f407";
+    module = "talkweb,f407";
     device_info {
         match_attr = "hdf_manager";
         template host {
@@ -61,7 +61,7 @@ root {
 				spi0 :: deviceNode {
                     policy = 2;
                     priority = 100; // 因为spi的gpio引脚要在spi初始化之前初始化，所以优先级比gpio的hdf优先级低               
-                    moduleName = "STM_TW_SPI_MODULE_HDF"; //驱动名称，该字段的值必须和驱动入口结构的moduleName值一致
+                    moduleName = "TW_SPI_MODULE_HDF"; //驱动名称，该字段的值必须和驱动入口结构的moduleName值一致
                     serviceName = "HDF_PLATFORM_SPI_0";   
                     deviceMatchAttr = "spi_w25q_config";  // 对应hdf_spi.hcs中的config
 				}
@@ -92,7 +92,7 @@ root {
                 csNum = 0;  // 片选号
                 transDir = 0;  // 0: TW_HAL_SPI_FULL_DUPLEX 1: TW_HAL_SPI_SIMPLEX_RX 2: TW_HAL_SPI_HALF_DUPLEX_RX 3: TW_HAL_SPI_HALF_DUPLEX_TX
                 transMode = 1; // 1: normal 0:dma
-                smMode = 1;      //  0: slave 1: master
+                smMode = 1;      //  0:
                 dataWidth = 0; // 0:8bit 1:16bit
                 clkMode = 0;   // 0: cpol 0 cpha 0  1:CPOL = 1; CPHA = 0 2:CPOL = 0; CPHA = 1 3:CPOL = 1; CPHA = 1
                 nss = 0;       // 0:NSS SOFT 1: NSS HARDWARE INPUT 2: NSS HARDWARE OUTPUT
@@ -285,7 +285,7 @@ static void BufferRead(DevHandle spiHandle, uint8_t* buf, uint32_t size)
 }
 ```
 
-- 使用SpiWrite, SpiRead通信，由于使用这两个接口无法制定是否关闭片选，因此在写或者读得buf第一个字节为自定义关闭片选信号，0不关闭片选， 1关闭片选，读取内容时要注意去掉第一个字节
+- 使用SpiWrite, SpiRead通信，由于使用这两个接口无法制定是否关闭片选，因此在写或者读得buf第一个字节为自定义关闭片选信号，0不关闭片选， 1关闭片选，读取内容时要注意去掉位置为一的字节
 ``` c
 static uint16_t ReadDeviceId(DevHandle spiHandle)
 {

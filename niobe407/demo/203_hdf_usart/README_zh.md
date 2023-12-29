@@ -57,7 +57,7 @@
 ## 接口说明
     1. uart open初始化函数:DevHandle UartOpen(uint32_t port);
         参数说明: 
-            port:     对应的uart号，stm32f407芯片有6组uart，分别为uart1-uart6 0-5
+            port:     对应的uart号，407芯片有6组uart，分别为uart1-uart6 0-5
             return:  不为NULL,表示初始化成功
     2. uart设置波特率函数：int32_t UartSetBaud(DevHandle handle, uint32_t baudRate);
         参数说明：
@@ -87,8 +87,8 @@
 ```
 
 root {
-    module = "talkweb,stm32f407";
-    device_info {
+    module = "talkweb,407";
+    device_info {   
         match_attr = "hdf_manager";
         template host {
             hostName = "";
@@ -111,7 +111,7 @@ root {
 				uart4 :: deviceNode { // uart4配置信息
                     policy = 2;//驱动服务发布的策略，policy大于等于1（用户态可见为2，仅内核态可见为1）；
                     priority = 100;//驱动启动优先级
-                    moduleName = "STM_TW_UART_MODULE_HDF";//驱动名称，该字段的值必须和驱动入口结构的moduleName值一致
+                    moduleName = "TW_UART_MODULE_HDF";//驱动名称，该字段的值必须和驱动入口结构的moduleName值一致
                     serviceName = "HDF_PLATFORM_UART_4"; //驱动对外发布服务的名称，必须唯一，必须要按照HDF_PLATFORM_UART_X的格式，X为UART控制器编号
                     deviceMatchAttr = "uart_config4";
 				}
@@ -120,7 +120,7 @@ root {
 				uart5 :: deviceNode { // uart5配置信息，为485接口
                     policy = 2;
                     priority = 100;
-                    moduleName = "STM_TW_UART_MODULE_HDF";
+                    moduleName = "TW_UART_MODULE_HDF";
                     serviceName = "HDF_PLATFORM_UART_5";
                     deviceMatchAttr = "uart_config5";
 				}

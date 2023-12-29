@@ -23,28 +23,25 @@
 #define HDF_USART_STACK_SIZE 0x1000
 #define HDF_USART_TASK_NAME "hdf_usart_test_task"
 #define HDF_USART_TASK_PRIORITY 25
+#define UART_PORT_NUM (5)
+#define DEFAULT_BAUD_RATE (115200)
+#define TX_BUFFER_SIZE (256)
+#define RX_BUFFER_SIZE (256)
+#define DELAY_TIME_MS (100)
 
 uint8_t txbuf[80] = "this is usart test function\n";
 uint8_t rxbuf[80] = {0};
 uint8_t len = 0;
 uint8_t tmp;
-
-static void* HdfUsartTestEntry(void* arg)
+static void UartTestConfiguration(DevHandle handle)
 {
-    (void *)arg;
-    uint32_t port = 5;
-    DevHandle handle = UartOpen(port);
-    if (handle == NULL) {
-        HDF_LOGE("UartOpen %u: failed!\n", port);
-        return NULL;
-    }
     int32_t ret;
     uint32_t baudRate;
     ret = UartGetBaud(handle, &baudRate);
     if (ret != 0) {
         HDF_LOGE("UartGetBaud: failed, ret %d\n", ret);
     }
-    baudRate = 115200;
+    baudRate = DEFAULT_BAUD_RATE;
     ret = UartSetBaud(handle, baudRate);
     if (ret != 0) {
         HDF_LOGE("UartGetBaud: failed, ret %d\n", ret);
@@ -65,29 +62,51 @@ static void* HdfUsartTestEntry(void* arg)
     if (ret != 0) {
         HDF_LOGE("UartSetAttribute: failed, ret %d\n", ret);
     }
+}
+
+static void UartTestCommunication(DevHandle handle)
+{
+    uint8_t txbuf[TX_BUFFER_SIZE] = "Hello, UART!";
+    uint8_t rxbuf[RX_BUFFER_SIZE] = {0};
+    int32_t ret;
+    size_t len;
+
     len = strlen((char *)txbuf);
     ret = UartWrite(handle, txbuf, len);
     if (ret != 0) {
         HDF_LOGE("UartWrite: failed, ret %d\n", ret);
-        goto _ERR;
+        return;
     }
     while (1) {
         ret = UartRead(handle, rxbuf, len);
         if (ret < 0) {
             HDF_LOGE("UartRead: failed, ret %d\n", ret);
-            goto _ERR;
+            return;
         } else if (ret > 0) {
             HDF_LOGI("UartRead: content length is %d is :%s\n", ret, rxbuf);
         }
-        osDelay(100);
+        osDelay(DELAY_TIME_MS);
+        return;
     }
+}
 
-_ERR:
+static void* HdfUsartTestEntry(void* arg)
+{
+    (void *)arg;
+    DevHandle handle = UartOpen(UART_PORT_NUM);
+    if (handle == NULL) {
+        HDF_LOGE("UartOpen %u: failed!\n", UART_PORT_NUM);
+        return NULL;
+    }
+    
+    UartTestConfiguration(handle);
+    UartTestCommunication(handle);
+    
     UartClose(handle);
     return NULL;
 }
 
-void StartHdfUsartTest(void)
+static void StartHdfUsartTest(void)
 {
     osThreadAttr_t attr;
 

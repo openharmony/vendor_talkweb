@@ -57,15 +57,13 @@ OHOS # hiview init success.
 <--------------- OHOS Application Start Here --------------->
 [HDF:E/HDF_LOG_TAG]into HdfI2cTestEntry!
 
-write uuid success: [11, 22, 33, 44, aa, bb, cc, dd]
-read uuid success: [11, 22, 33, 44, aa, bb, cc, dd]
 ```
 ## I2C HDF HCS配置文件解析
 - device_i2c_info.hcs文件位于/device/board/talkweb/niobe407/sdk/hdf_config/device_i2c_info.hcs,本例子使用的是i2c3
 ```
 
 root {
-    module = "talkweb,stm32f407"; 
+    module = "talkweb,407"; 
     device_info {
         match_attr = "hdf_manager";
         template host {
@@ -129,7 +127,7 @@ root {
                 driver : gpio {
                     match_attr = "i2c3_config"; 
                     port = 3;  // I2C端口号(1~3)
-                    dev_mode = 0; //0 = master, 1= slave
+                    dev_mode = 0; 
                     dev_addr = 0;  //I2C 本机地址
                     speed = 100000; //I2C速率
                 }

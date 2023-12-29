@@ -25,11 +25,34 @@
 #define HDF_SPI_TASK_PRIORITY 25
 uint8_t txBuffer[] = "welcome to OpenHarmony\n";
 #define WIP_FLAG       0x01
-#define SPI_FLASH_IDx  0x4018
-#define Countof(a)      (sizeof(a)/sizeof(*(a)))
-#define bufferSize      (Countof(txBuffer) - 1)
+#define SPI_FLASH_I_DX  0x4018
+#define COUNTOF(a)      (sizeof(a)/sizeof(*(a)))
+#define BUFFER_SIZE      (COUNTOF(txBuffer) - 1)
+#define SPI_BUS_NUM (0)
+#define SPI_CS_NUM (0)
+#define READ_DEVICE_ID_CMD {0xAB, 0xFF, 0xFF, 0xFF, 0xFF}
+#define READ_DEVICE_ID_CMD_SIZE (sizeof(READ_DEVICE_ID_CMD))
+#define READ_DEVICE_ID_BYTE_POS (4)
+#define FLASH_ID_CMD {0x00, 0x9f}
+#define FLASH_ID_CMD_SIZE (sizeof(FLASH_ID_CMD))
+#define FLASH_ID_BYTE_POS_1 (2)
+#define FLASH_ID_BYTE_POS_2 (3)
+#define FLASH_ID_CMD_BYTE_1 (0x9f)
+#define FLASH_ID_CMD_BYTE_2 (0xFF)
+#define FLASH_ID_CMD_BYTE_3 (0xFF)
+#define FLASH_ID_CMD_BYTE_4 (0xFF)
+#define FLASH_ID_BUFFER_SIZE (4)
+#define DEVICE_ID_RESP_SIZE_2 2
+#define DEVICE_ID_RESP_SIZE_4 4
+#define DEVICE_ID_CMD_BYTE_1 0x00
+#define DEVICE_ID_CMD_BYTE_2 0xAB
+#define DEVICE_ID_CMD_BYTE_3 0xFF
+#define DEVICE_ID_CMD_BYTE_4 0xFF
+#define DEVICE_ID_CMD_BYTE_5 0xFF
+#define DEVICE_ID_RESP_CMD_BYTE 0x01
 
-uint8_t rxBuffer[bufferSize] = {0};
+
+uint8_t rxBuffer[BUFFER_SIZE] = {0};
 #define USE_TRANSFER_API 1
 
 static uint8_t BufferCmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength)
@@ -50,18 +73,18 @@ static uint16_t ReadDeviceId(DevHandle spiHandle)
     struct SpiMsg msg;
     uint16_t deviceId = 0;
     uint8_t rbuff[5] = { 0 };
-    uint8_t wbuff[5] = { 0xAB, 0xFF, 0xFF, 0xFF, 0xFF };
+    uint8_t wbuff[5] = READ_DEVICE_ID_CMD;
     int32_t ret = 0;
     msg.wbuf = wbuff;
     msg.rbuf = rbuff;
-    msg.len = sizeof(wbuff);
+    msg.len = READ_DEVICE_ID_CMD_SIZE;
     msg.keepCs = 0;
     msg.delayUs = 0;
     ret = SpiTransfer(spiHandle, &msg, 1);
     if (ret != 0) {
         HDF_LOGE("SpiTransfer: failed, ret %d\n", ret);
     } else {
-        deviceId = rbuff[4];
+        deviceId = rbuff[READ_DEVICE_ID_BYTE_POS];
     }
 
     return deviceId;
@@ -71,8 +94,9 @@ static uint16_t ReadFlashId(DevHandle spiHandle)
 {
     int32_t ret = 0;
     uint16_t flashId = 0;
-    uint8_t rbuff1[4] = { 0 };
-    uint8_t wbuff1[4] = { 0x9f, 0xFF, 0xFF, 0xFF };
+    uint8_t rbuff1[FLASH_ID_BUFFER_SIZE] = { 0 };
+    uint8_t wbuff1[FLASH_ID_BUFFER_SIZE] = { FLASH_ID_CMD_BYTE_1, FLASH_ID_CMD_BYTE_2,
+    FLASH_ID_CMD_BYTE_3, FLASH_ID_CMD_BYTE_4 };
     struct SpiMsg msg1 = {0};
     msg1.wbuf = wbuff1;
     msg1.rbuf = rbuff1;
@@ -83,7 +107,7 @@ static uint16_t ReadFlashId(DevHandle spiHandle)
     if (ret != 0) {
         HDF_LOGE("SpiTransfer: failed, ret %d\n", ret);
     } else {
-        flashId = (msg1.rbuf[2]<<8)|msg1.rbuf[3];
+        flashId = (msg1.rbuf[FLASH_ID_BYTE_POS_1] << 8) | msg1.rbuf[FLASH_ID_BYTE_POS_2];
     }
     return flashId;
 }
@@ -250,16 +274,16 @@ static uint16_t ReadDeviceId(DevHandle spiHandle)
 {
     struct SpiMsg msg;
     uint16_t deviceId = 0;
-    uint8_t rbuff1[2] = { 0 };
-    uint8_t wbuff1[5] = {0x00, 0xAB, 0xff, 0xff, 0xff};
+    uint8_t rbuff1[DEVICE_ID_RESP_SIZE_2] = { 0 };
+    uint8_t wbuff1[DEVICE_ID_CMD_SIZE] = {DEVICE_ID_CMD_BYTE_1, DEVICE_ID_CMD_BYTE_2, DEVICE_ID_CMD_BYTE_3, DEVICE_ID_CMD_BYTE_4, DEVICE_ID_CMD_BYTE_5};
     int32_t ret = 0;
 
-    ret =SpiWrite(spiHandle, wbuff1, 5);
+    ret = SpiWrite(spiHandle, wbuff1, DEVICE_ID_CMD_SIZE);
     if (ret != 0) {
         HDF_LOGE("SpiWrite: failed, ret %d\n", ret);
     }
-    rbuff1[0] = 0x01;
-    ret = SpiRead(spiHandle, rbuff1, 2);
+    rbuff1[0] = DEVICE_ID_RESP_CMD_BYTE;
+    ret = SpiRead(spiHandle, rbuff1, DEVICE_ID_RESP_SIZE_2);
     if (ret != 0) {
         HDF_LOGE("SpiWrite: failed, ret %d\n", ret);
     }
@@ -273,18 +297,18 @@ static uint16_t ReadFlashId(DevHandle spiHandle)
 {
     int32_t ret = 0;
     uint16_t flashId = 0;
-    uint8_t wbuff[2] = {0x00, 0x9f};
+    uint8_t wbuff[2] = FLASH_ID_CMD;
     uint8_t rbuff[4] = {0};
-    ret =SpiWrite(spiHandle, wbuff, sizeof(wbuff));
+    ret = SpiWrite(spiHandle, wbuff, FLASH_ID_CMD_SIZE);
     if (ret != 0) {
         HDF_LOGE("SpiWrite: failed, ret %d\n", ret);
     }
     rbuff[0] = 0x01;
-    ret = SpiRead(spiHandle, rbuff, 4);
+    ret = SpiRead(spiHandle, rbuff, DEVICE_ID_RESP_SIZE_4);
     if (ret != 0) {
         HDF_LOGE("SpiWrite: failed, ret %d\n", ret);
     }
-    flashId = (rbuff[2] << 8)|rbuff[3];
+    flashId = (rbuff[FLASH_ID_BYTE_POS_1] << 8) | rbuff[FLASH_ID_BYTE_POS_2];
     return flashId;
 }
 
@@ -300,7 +324,7 @@ static void WaitForWriteEnd(DevHandle spiHandle)
     }
     do {
         rbuff[0] = 0;
-        ret = SpiRead(spiHandle, rbuff, 2);
+        ret = SpiRead(spiHandle, rbuff, DEVICE_ID_RESP_SIZE_2);
         if (ret != 0) {
             HDF_LOGE("SpiRead: failed, ret %d\n", ret);
         }
@@ -400,26 +424,47 @@ static void SectorErase(DevHandle spiHandle)
 static void* HdfSpiTestEntry(void* arg)
 {
     (void)arg;
-#ifdef USE_SET_CFG
-    int32_t ret;
-    struct SpiCfg cfg;
-#endif
     uint16_t flashId = 0;
     uint16_t deviceId = 0;
     struct SpiDevInfo spiDevinfo;
     DevHandle spiHandle;
-    spiDevinfo.busNum = 0;
-    spiDevinfo.csNum = 0;
+    spiDevinfo.busNum = SPI_BUS_NUM;
+    spiDevinfo.csNum = SPI_CS_NUM;
     spiHandle = SpiOpen(&spiDevinfo);
     if (spiHandle == NULL) {
         HDF_LOGE("SpiOpen: failed\n");
         return NULL;
     }
+
 #ifdef USE_SET_CFG
+    int32_t ret = SpiSetCfg(spiHandle);
+    if (ret != 0) {
+        SpiClose(spiHandle);
+        return NULL;
+    }
+#endif
+
+    deviceId = ReadDeviceId(spiHandle);
+    HDF_LOGI("read device id is 0x%02x\n", deviceId);
+    flashId = ReadFlashId(spiHandle);
+    HDF_LOGI("read flash id is 0x%02x\n", flashId);
+
+    if (flashId == SPI_FLASH_I_DX) {
+        SpiTest(spiHandle);
+    }
+
+    SpiClose(spiHandle);
+    return NULL;
+}
+
+static int32_t spiSetCfg(DevHandle spiHandle)
+{
+    int32_t ret;
+    struct SpiCfg cfg;
     ret = SpiGetCfg(spiHandle, &cfg);
     if (ret != 0) {
         HDF_LOGE("SpiGetCfg: failed, ret %d\n", ret);
-        goto err;
+        return ret;
     }
     HDF_LOGI("speed:%d, bitper:%d, mode:%d, transMode:%d\n", cfg.maxSpeedHz, cfg.bitsPerWord, cfg.mode, \
         cfg.transferMode);
@@ -430,7 +475,7 @@ static void* HdfSpiTestEntry(void* arg)
     ret = SpiSetCfg(spiHandle, &cfg);
     if (ret != 0) {
         HDF_LOGE("SpiSetCfg: failed, ret %d\n", ret);
-        goto err;
+        return ret;
     }
     SpiClose(spiHandle);
     spiHandle = SpiOpen(&spiDevinfo);
@@ -438,33 +483,10 @@ static void* HdfSpiTestEntry(void* arg)
         HDF_LOGE("SpiOpen: failed\n");
         return NULL;
     }
-#endif
-    deviceId = ReadDeviceId(spiHandle);
-    HDF_LOGI("read device id is 0x%02x\n", deviceId);
-    flashId = ReadFlashId(spiHandle);
-    HDF_LOGI("read flash id is 0x%02x\n", flashId);
-
-    if (flashId == SPI_FLASH_IDx) {
-        SectorErase(spiHandle);
-        BufferWrite(spiHandle, txBuffer, bufferSize);
-        HDF_LOGI("send buffer is %s\n", txBuffer);
-        BufferRead(spiHandle, rxBuffer, bufferSize);
-        HDF_LOGI("recv send buffer is %s\n", rxBuffer);
-
-        if (BufferCmp(txBuffer, rxBuffer, bufferSize)) {
-            HDF_LOGI("hdf spi write read flash success\n");
-        } else {
-            HDF_LOGI("hdf spi write read flash failed\n");
-        }
-    }
-#ifdef USE_SET_CFG
-err:
-#endif
-    SpiClose(spiHandle);
-    return NULL;
+    return ret;
 }
 
-void StartHdfSpiTest(void)
+static void StartHdfSpiTest(void)
 {
     osThreadAttr_t attr;
 
