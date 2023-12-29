@@ -90,7 +90,7 @@ static void WriteRJGTMemBuf(unsigned char *buf, unsigned int len)
     unsigned char buffer[len + 1];
 
     buffer[0] = RJGT_MEM_REGISTER_ADDR;
-    memcpy(&buffer[1], buf, len);
+    memcpy_s(&buffer[1], len, buf, len);
     I2cWriteData(g_i2cHandle, RJGT102_ADDR, buffer, sizeof(buffer));
 }
 
@@ -192,10 +192,11 @@ static void *HdfI2cTestEntry(void *arg)
 
     while (1) {
         osDelay(DELAY_TICKS);
+        return;
     }
 }
 
-void StartHdfI2cTest(void)
+static void StartHdfI2cTest(void)
 {
     UINT32 uwRet;
     UINT32 taskID;
