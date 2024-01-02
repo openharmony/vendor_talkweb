@@ -1,0 +1,127 @@
+# Copyright (c) 2022 Talkweb Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+if BOARD_NIOBE407
+config USE_TALKWEB_APPLICATION
+    bool "use talkweb niobe407 application"
+    default n
+    depends on BOARD_NIOBE407
+    help
+        This is a switch for use talkweb niobe407 application.
+        If you want to write your application code, please close it.
+
+choice APPLICATION_CHOOSE_NIOBE407
+    prompt "niobe407 application choose"
+    depends on USE_TALKWEB_APPLICATION
+    default NIOBE407_USE_001_SYSTEM
+    help
+        This is a choose for application name
+    config NIOBE407_USE_001_SYSTEM
+        bool
+        prompt "001_system_helloworld"
+    config NIOBE407_USE_002_SYSTEM
+        bool
+        prompt "002_system_thread"
+    config NIOBE407_USE_003_SYSTEM
+        bool
+        prompt "003_system_timer"
+    config NIOBE407_USE_004_SYSTEM
+        bool
+        prompt "004_system_event"
+    config NIOBE407_USE_005_SYSTEM
+        bool
+        prompt "005_system_mutex"
+    config NIOBE407_USE_006_SYSTEM
+        bool
+        prompt "006_system_semp"
+    config NIOBE407_USE_007_SYSTEM
+        bool
+        prompt "007_system_message"
+    config NIOBE407_USE_101_PERIPHERAL
+        bool
+        prompt "101_peripheral_adc_temperature"
+    config NIOBE407_USE_102_PERIPHERAL
+        bool
+        prompt "102_peripheral_rng_number"
+    config NIOBE407_USE_103_PERIPHERAL
+        bool
+        prompt "103_peripheral_can_send_example"
+    config NIOBE407_USE_201_HDF
+        bool
+        prompt "201_hdf_gpio_key"
+    config NIOBE407_USE_202_HDF
+        bool
+        prompt "202_hdf_spi_flash"
+    config NIOBE407_USE_203_HDF
+        bool
+        prompt "203_hdf_usart_read_write"
+    config NIOBE407_USE_204_HDF
+        bool
+        prompt "204_hdf_i2c" 
+    config NIOBE407_USE_205_HDF
+        bool
+        prompt "205_hdf_watchdog"
+    config NIOBE407_USE_206_HDF
+        bool
+        prompt "206_hdf_pwm"
+    config NIOBE407_USE_301_NETWORK
+        bool
+        prompt "301_network_tcpclient"
+    config NIOBE407_USE_302_NETWORK
+        bool
+        prompt "302_network_tcpserver"
+    config NIOBE407_USE_303_NETWORK
+        bool
+        prompt "303_network_udptest"
+    config NIOBE407_USE_308_NETWORK
+        bool
+        prompt "308_network_iperf_server"
+    config NIOBE407_USE_401_FILE
+        bool
+        prompt "401_file_kv_store"
+    config NIOBE407_USE_402_FILE
+        bool
+        prompt "402_file_fs_store"
+    config NIOBE407_USE_501_OPTIMIZATION
+        bool
+        prompt "501_optimization_ccmram_use"
+endchoice
+
+config NIOBE407_APPLICATION_NAME
+    depends on USE_TALKWEB_APPLICATION
+    string
+    default "001_system_helloworld"          if NIOBE407_USE_001_SYSTEM
+    default "002_system_thread"              if NIOBE407_USE_002_SYSTEM
+    default "003_system_timer"               if NIOBE407_USE_003_SYSTEM
+    default "004_system_event"               if NIOBE407_USE_004_SYSTEM
+    default "005_system_mutex"               if NIOBE407_USE_005_SYSTEM
+    default "006_system_semp"                if NIOBE407_USE_006_SYSTEM
+    default "007_system_message"             if NIOBE407_USE_007_SYSTEM
+    default "101_peripheral_adc_temperature" if NIOBE407_USE_101_PERIPHERAL
+    default "102_peripheral_rng_number"      if NIOBE407_USE_102_PERIPHERAL
+    default "103_peripheral_can_example"     if NIOBE407_USE_103_PERIPHERAL
+    default "201_hdf_gpio_key"               if NIOBE407_USE_201_HDF
+    default "202_hdf_spi_flash"              if NIOBE407_USE_202_HDF
+    default "203_hdf_usart"                  if NIOBE407_USE_203_HDF
+    default "204_hdf_i2c"                    if NIOBE407_USE_204_HDF
+    default "205_hdf_watchdog"               if NIOBE407_USE_205_HDF
+    default "206_hdf_pwm"                    if NIOBE407_USE_206_HDF
+    default "301_network_tcpclient"          if NIOBE407_USE_301_NETWORK
+    default "302_network_tcpserver"          if NIOBE407_USE_302_NETWORK
+    default "303_network_udptest"            if NIOBE407_USE_303_NETWORK
+    default "308_network_iperf_server"       if NIOBE407_USE_308_NETWORK
+    default "401_file_kv_store"              if NIOBE407_USE_401_FILE
+    default "402_file_fs_store"              if NIOBE407_USE_402_FILE
+    default "501_optimization_ccmram_use"    if NIOBE407_USE_501_OPTIMIZATION
+
+endif #BOARD_NIOBE407
